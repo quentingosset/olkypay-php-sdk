@@ -13,12 +13,13 @@ For open-source enthusiasts, you are welcome to support the development of this 
 
     $olkypay->post(\Olkypay\Resources::<NAME>,<PARAMETRE>);
 
-|NAME|PARAMETRE|DESCRIPTION	|
-|--|--|--|--|
-| $token  |array| Generate a tokens|
-| $creatCustomer  |array| Creat a customer|
-| $creatOrder|array| creat a order for a customer|
-| $dopayment|array| generate payment url|
+| NAME           | PARAMETRE | DESCRIPTION                  |
+|----------------|-----------|------------------------------|
+| $token         | array     | Generate a tokens            |
+| $creatCustomer | array     | Creat a customer             |
+| $creatOrder    | array     | creat a order for a customer |
+| $dopayment     | array     | generate payment url         |
+
 
 ## Creating a basic paiement order:
 ### 1) Initialisation :
