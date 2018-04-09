@@ -1,12 +1,40 @@
 # OLKYPAY-PHP-SDK
-## Creating a basic paiement order:
+![Olkypay logo](https://www.olkypay.com//wp-content//uploads//2017//03//logo.png)
 
-### Set your olkypaydata :
+> Olkypay is an online payment solution that accepts card payments.
+
+I developed this library after spending several days trying to understand the olkypay system and losing some hair! This library allows you to make requests to Olkypay in a very simple way.
+
+For open-source enthusiasts, you are welcome to support the development of this library :-) 
+
+**STATUS: IN DEVELOPPEMENT**
+
+### POST methode :
+
+    $olkypay->post(\Olkypay\Resources::<NAME>,<PARAMETRE>);
+
+|NAME|PARAMETRE|DESCRIPTION	|
+|--|--|--|--|
+| $token  |array| Generate a tokens|
+| $creatCustomer  |array| Creat a customer|
+| $creatOrder|array| creat a order for a customer|
+| $dopayment|array| generate payment url|
+
+## Creating a basic paiement order:
+### 1) Initialisation :
+Add this code in top of your page :
+
+    require_once("Resources.php");  
+    require_once("Request.php");  
+    require_once("Client.php");  
+    require_once("Response.php");
+
+### 2) Set your olkypaydata :
 Initialize a client object with your Olkpay data 
 
     $olkypay = new \Olkypay\Client("YourClientSecret","YourUsername","YourPassword",YourNetworkId,YourSupplierId);
 
-### Generate a token :
+### 3) Generate a token :
 This tokens is valide for only 1 use.
 
     $request = $olkypay->post(\Olkypay\Resources::$token);
@@ -14,7 +42,7 @@ This tokens is valide for only 1 use.
      if($request){  
         $token = $request->getAccessToken();  
     }
-### Creat a new customer :
+### 4) Creat a new customer :
 Creat a array with multiple required data :
 
 
@@ -37,16 +65,16 @@ Call the request and get the customer ID :
     $request = $olkypay->post(\Olkypay\Resources::$creatCustomer,$params); 
      
     if($request){  
-	    $clienId = $request->getCustomerId();
+	    $customerId = $request->getCustomerId();
     }
  
  
-### Creat a order for the actual customer :
+### 5) Creat a order for the actual customer :
 Creat a array with multiple required data :
 
     $params = array(  
         "token" => $token,  
-        "clientId" => $clienId,  
+        "clientId" => $customerId,  
         "comment" => "MY ORDER NUMBER X",  
         "currencyCode" => "EUR",  
         "executionDate" => date('Y-m-d'),  
@@ -62,5 +90,25 @@ Creat a array with multiple required data :
       
     if($request){  
         $idOrder = $request->getOrderId();  
+    }
+### 6) Generate the payment url :
+Creat a array with multiple required data :
+
+    $params = array(  
+        "token" => $token,  
+        "clientId" => $customerId,  
+        "support3ds" => true,  
+        "urlRedirectSuccess" => "https://www.example.be/success",  
+        "urlRedirectFailure" => "https://www.example.be/failure",  
+        "orderId" => $idOrder,  
+        "amount" => 1000  
+    );
+
+call the request and get the payment URL :
+
+    $request = $olkypay->post(\Olkypay\Resources::$dopayment,$params);  
+      
+    if($request){  
+        $paymentUrl = $request->getPaymentUrl();  
     }
 
