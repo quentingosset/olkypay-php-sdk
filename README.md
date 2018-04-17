@@ -42,7 +42,12 @@ Add this code in top of your page :
 ### 2) Set your olkypaydata :
 Initialize a client object with your Olkpay data 
 
-    $olkypay = new \Olkypay\Client("YourClientSecret","YourUsername","YourPassword",YourNetworkId,YourSupplierId);
+    $olkypay = new \Olkypay\Client("YourClientSecret","YourUsername","YourPassword",YourNetworkId,YourSupplierId,"YourMode");
+    
+   YourMode : 
+ - UAT (test environement)
+ - PROD (production environement)
+   
 
 ### 3) Generate a token :
 This tokens is valide for only 1 use and auto generated when you initialize the object.
@@ -52,7 +57,6 @@ Creat a array with multiple required data :
 
 
     $params = array(  
-        "token" => $token,  
         "externalClientCode" => uniqid(),  
         "lastName" => "Quentin",  
         "moralPerson" => false,  
@@ -78,7 +82,6 @@ Call the request and get the customer ID :
 Creat a array with multiple required data :
 
     $params = array(  
-        "token" => $token,  
         "clientId" => $customerId,  
         "comment" => "MY ORDER NUMBER X",  
         "currencyCode" => "EUR",  
@@ -100,7 +103,6 @@ Creat a array with multiple required data :
 Creat a array with multiple required data :
 
     $params = array(  
-        "token" => $token,  
         "clientId" => $customerId,  
         "support3ds" => true,  
         "urlRedirectSuccess" => "https://www.example.be/success",  
@@ -116,3 +118,4 @@ call the request and get the payment URL :
     if($request){  
         $paymentUrl = $request->getPaymentUrl();  
     }
+
