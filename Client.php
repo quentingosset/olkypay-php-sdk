@@ -11,14 +11,22 @@ class Client {
     private $network_id;
     private $supplierId;
     private $token;
+    private $mode;
 
-    public function __construct($client_secret,$username,$password,$network_id,$supplierId){
+    public function __construct($client_secret,$username,$password,$network_id,$supplierId,$mode){
         $this->client_secret = $client_secret;
         $this->username = $username;
         $this->password = $password;
         $this->network_id = $network_id;
         $this->supplierId = $supplierId;
+        if($mode != "UAT" && $mode != "PROD"){
+            echo "You need set a mode PROD or UAT";
+            exit();
+        }else{
+            $this->mode = $mode;
+        }
         $this->token = $this->setToken();
+
     }
 
     /**
@@ -64,9 +72,14 @@ class Client {
     /**
      * @return string
      */
-    public function getToken(): string
+    public function getToken()
     {
         return $this->token;
+    }
+
+    public function getMode()
+    {
+        return $this->mode;
     }
 
     public function post($function,$params = null){
