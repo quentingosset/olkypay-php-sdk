@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Myabi
- * Date: 08-04-18
- * Time: 00:03
- */
 
 namespace Olkypay;
 require_once("Client.php");
@@ -16,10 +10,14 @@ class Request
 
 
     private $client;
+    private $url;
 
     public function __construct($client)
     {
        $this->client = $client;
+       if($this->client->getMode() == "UAT"){
+           $this->url = "uat-";
+       }
     }
 
     public function ErrorMessage($string){
@@ -29,7 +27,7 @@ class Request
     public function generateToken(){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://stp.olkypay.com/auth/realms/b2b/protocol/openid-connect/token",
+            CURLOPT_URL => "https://".$this->url."stp.olkypay.com/auth/realms/b2b/protocol/openid-connect/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -112,7 +110,7 @@ class Request
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://ws.olkypay.com/payer",
+            CURLOPT_URL => "https://".$this->url."ws.olkypay.com/payer",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -183,7 +181,7 @@ class Request
         }
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://ws.olkypay.com/order/std",
+            CURLOPT_URL => "https://".$this->url."ws.olkypay.com/order/std",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -249,7 +247,7 @@ class Request
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://ws.olkypay.com/card/form/dopayment",
+            CURLOPT_URL => "https://".$this->url."ws.olkypay.com/card/form/dopayment",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -287,7 +285,7 @@ class Request
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://ws.olkypay.com/order/std/proof/".$params['idOrder'],
+            CURLOPT_URL => "https://".$this->url."ws.olkypay.com/order/std/proof/".$params['idOrder'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -334,7 +332,7 @@ class Request
                     }else{
                         $curl = curl_init();
                         curl_setopt_array($curl, array(
-                            CURLOPT_URL => "https://ws.olkypay.com/order/".$params['idOrder'],
+                            CURLOPT_URL => "https://".$this->url."ws.olkypay.com/order/".$params['idOrder'],
                             CURLOPT_RETURNTRANSFER => true,
                             CURLOPT_ENCODING => "",
                             CURLOPT_MAXREDIRS => 10,
@@ -367,7 +365,7 @@ class Request
                 if(array_key_exists('externalId', $params)){
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => "https://ws.olkypay.com/order/externalid/".$params['externalId'],
+                        CURLOPT_URL => "https://".$this->url."ws.olkypay.com/order/externalid/".$params['externalId'],
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => "",
                         CURLOPT_MAXREDIRS => 10,
