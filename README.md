@@ -1,5 +1,5 @@
 # OLKYPAY-PHP-SDK
-![Olkypay logo](https://www.olkypay.com//wp-content//uploads//2017//03//logo.png)
+![Olkypay logo](https://www.olkypay.com/img/favicon/logo.png)
 
 > Olkypay is an online payment solution that accepts card payments.
 
